@@ -1,0 +1,6 @@
+/* App specific styles if needed.
+   Most styles are in index.css or component specific files. */
+.app {
+  min-height: 100vh;
+  width: 100%;
+}
