@@ -1,0 +1,65 @@
+.about-section {
+    position: relative;
+    padding: 6rem 1rem;
+    overflow: hidden;
+}
+
+.centered-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--white);
+    position: relative;
+    z-index: 2;
+}
+
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    perspective: 1000px;
+    /* Essential for 3D tilt effect */
+}
+
+.about-card {
+    max-width: 800px;
+    width: 100%;
+    /* Glassmorphism style inherited from .glass-card but refined here */
+    background: rgba(17, 34, 64, 0.6);
+    /* Slightly more transparent */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    /* Soft gold border */
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    box-shadow:
+        0 20px 40px -10px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
+    /* Inner glow */
+    transform-style: preserve-3d;
+}
+
+.about-text {
+    font-size: 1.15rem;
+    color: var(--slate);
+    line-height: 1.8;
+    text-align: center;
+    /* Center the text content as requested implicitly by "centered content box" */
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .about-card {
+        padding: 2rem 1.5rem;
+    }
+}
