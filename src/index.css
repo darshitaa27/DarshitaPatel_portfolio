@@ -1,0 +1,209 @@
+:root {
+  --navy: #0a192f;
+  --light-navy: #112240;
+  --lightest-navy: #233554;
+  --slate: #8892b0;
+  --light-slate: #a8b2d1;
+  --white: #e6f1ff;
+  --purple: #bd93f9;
+  --mint: #D4AF37;
+  --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --glass-bg: rgba(17, 34, 64, 0.75);
+  --glass-border: rgba(212, 175, 55, 0.1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--navy);
+  color: var(--slate);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--white);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+section {
+  padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+/* Utilities */
+.text-mint {
+  color: var(--mint);
+}
+
+.text-purple {
+  color: var(--purple);
+}
+
+.text-white {
+  color: var(--white);
+}
+
+.font-mono {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+/* Flex utilities if needed, but trying to avoid full reimplementation of Tailwind */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: var(--transition);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  border-color: var(--mint);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  color: var(--mint);
+  border: 1px solid var(--mint);
+  background: transparent;
+}
+
+.btn-primary:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tag {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--mint);
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--lightest-navy);
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 6rem 2rem;
+  }
+}
