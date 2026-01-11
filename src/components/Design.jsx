@@ -5,15 +5,15 @@ import './Design.css';
 import ThreeDTilt from './ThreeDTilt';
 
 // Import images
-import imgVisa from '../assets/poster-visa.png';
+import imgVisa from '../assets/poster-travel-visa.png';
 import imgExhibition from '../assets/poster-exhibition.png';
 import imgConference from '../assets/poster-conference.png';
 
 const Design = () => {
     const designs = [
         {
-            title: 'VISA Poster',
-            description: 'A clean, modern VISA-themed poster design with bold typography and balanced layout.',
+            title: 'Travel Visa Poster',
+            description: 'A creative travel visa poster design featuring passport stamps and global elements.',
             tags: ['Poster', 'Adobe', 'Typography'],
             image: imgVisa,
             link: 'https://assets.adobe.com/id/urn:aaid:sc:VA6C2:e17f51c5-17c1-4782-a168-eb43e0eda11b?view=published'

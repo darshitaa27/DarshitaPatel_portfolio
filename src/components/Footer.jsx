@@ -5,12 +5,12 @@ const Footer = () => {
     return (
         <footer className="footer">
             <a
-                href="https://github.com/FenishPatel0245"
+                href="https://github.com/darshitaa27"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-mint transition-colors"
             >
-                Designed & Built by Darshita Patel
+                © 2026 Darshita Patel
             </a>
         </footer>
     );
