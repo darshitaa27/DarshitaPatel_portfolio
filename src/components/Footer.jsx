@@ -10,7 +10,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="hover:text-mint transition-colors"
             >
-                © 2026 Darshita Patel
+                © 2026 Darshita Patel. All rights reserved.
             </a>
         </footer>
     );
