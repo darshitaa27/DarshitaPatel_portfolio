@@ -16,7 +16,7 @@ Built with React, Vite, Framer Motion, and React Three Fiber.
     ```
 
 3.  **Open in browser**:
-    Navigate to `http://localhost:5173` (or the port shown in the terminal).
+    Navigate to `darshitapatel.com` (or the port shown in the terminal).
 
 ## 🛠 Tech Stack
 
