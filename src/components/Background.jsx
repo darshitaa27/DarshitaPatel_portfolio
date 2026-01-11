@@ -3,6 +3,13 @@ import './Background.css';
 
 const Background = () => {
     const canvasRef = useRef(null);
+    const wrapperRef = useRef(null);
+    const gridRef = useRef(null);
+    const glowRef = useRef(null);
+
+    // Mouse state
+    const mouse = useRef({ x: 0, y: 0 });
+    const target = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -15,11 +22,9 @@ const Background = () => {
         // Theme Colors
         const colors = {
             navy: '#0a192f',
-            lightNavy: '#112240',
-            mint: 'rgba(100, 255, 218, 0.1)',
-            mintBright: 'rgba(100, 255, 218, 0.4)',
-            slate: 'rgba(136, 146, 176, 0.15)',
-            white: 'rgba(230, 241, 255, 0.3)',
+            slate: 'rgba(136, 146, 176, 0.25)', // Increased visibility
+            mint: 'rgba(212, 175, 55, 0.25)', // Increased contrast for Gold
+            white: 'rgba(230, 241, 255, 0.4)',
         };
 
         const codeSnippets = [
@@ -30,7 +35,6 @@ const Background = () => {
         ];
 
         let particles = [];
-        let mouse = { x: width / 2, y: height / 2 };
 
         class Particle {
             constructor() {
@@ -40,44 +44,40 @@ const Background = () => {
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.z = Math.random() * 2 + 1; // Depth for parallax
-                this.isText = Math.random() > 0.85; // 15% chance to be text
+                this.z = Math.random() * 2 + 1; // Depth
+                this.isText = Math.random() > 0.9; // 10% chance to be text (reduced from 15%)
                 this.text = this.isText ? codeSnippets[Math.floor(Math.random() * codeSnippets.length)] : null;
-                this.size = this.isText ? Math.random() * 10 + 10 : Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
+                // Smaller elements for denser look
+                this.size = this.isText ? Math.random() * 6 + 10 : Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                // Higher base opacity for better visibility
+                this.opacity = Math.random() * 0.5 + 0.2;
             }
 
-            update(mouseX, mouseY) {
-                // Movement
+            update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Parallax effect based on mouse position
-                const parallaxX = (mouseX - width / 2) * 0.02 / this.z;
-                const parallaxY = (mouseY - height / 2) * 0.02 / this.z;
-
-                // Boundary Check (wrap around)
+                // Boundary Check
                 if (this.x < -50) this.x = width + 50;
                 if (this.x > width + 50) this.x = -50;
                 if (this.y < -50) this.y = height + 50;
                 if (this.y > height + 50) this.y = -50;
 
-                this.draw(ctx, parallaxX, parallaxY);
+                this.draw(ctx);
             }
 
-            draw(ctx, px, py) {
+            draw(ctx) {
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
-
                 if (this.isText) {
                     ctx.font = `${this.size}px 'Courier New', monospace`;
                     ctx.fillStyle = colors.slate;
-                    ctx.fillText(this.text, this.x + px, this.y + py);
+                    ctx.fillText(this.text, this.x, this.y);
                 } else {
                     ctx.beginPath();
-                    ctx.arc(this.x + px, this.y + py, this.size, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fillStyle = colors.mint;
                     ctx.fill();
                 }
@@ -85,59 +85,61 @@ const Background = () => {
             }
         }
 
-        // Initialize particles
         const initParticles = () => {
             particles = [];
-            const particleCount = Math.min(Math.floor(width * height / 15000), 100); // Density control
+            // Increased density: divider reduced from 15000 to 9000, cap increased to 150
+            const particleCount = Math.min(Math.floor(width * height / 9000), 150);
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
         };
         initParticles();
 
-        // Circuit/Grid Drawing
-        const drawGrid = () => {
-            ctx.strokeStyle = 'rgba(136, 146, 176, 0.03)';
-            ctx.lineWidth = 1;
-            const gridSize = 100;
-
-            // Vertical lines
-            for (let x = 0; x <= width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-
-            // Horizontal lines
-            for (let y = 0; y <= height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
-        };
-
+        // Animation Loop
+        let animationFrameId;
         const animate = () => {
             ctx.clearRect(0, 0, width, height);
 
-            // Draw Grid
-            drawGrid();
+            // Lerp mouse values for smooth camera
+            // Current += (Target - Current) * factor
+            mouse.current.x += (target.current.x - mouse.current.x) * 0.05;
+            mouse.current.y += (target.current.y - mouse.current.y) * 0.05;
 
-            // Connect nearby particles (Circuit effect)
+            // Apply CSS Transforms to layers
+            const x = mouse.current.x; // -1 to 1
+            const y = mouse.current.y; // -1 to 1
+
+            // Layer 1: Glow (Furthest - moves least)
+            if (glowRef.current) {
+                glowRef.current.style.transform = `translate3d(${x * 5}px, ${y * 5}px, 0)`;
+            }
+
+            // Layer 2: Grid (Mid-ground)
+            if (gridRef.current) {
+                // Subtle tilt + translate
+                gridRef.current.style.transform = `translate3d(${x * 10}px, ${y * 10}px, 0) rotateX(${y * 1}deg) rotateY(${x * 1}deg)`;
+            }
+
+            // Layer 3: Particles/Canvas (Closest - moves most)
+            if (canvasRef.current) {
+                // Stronger parallax (clamped to ~18px) + subtle 3D tilt
+                canvasRef.current.style.transform = `translate3d(${x * 18}px, ${y * 18}px, 0) rotateX(${y * 2}deg) rotateY(${x * 2}deg)`;
+            }
+
+            // Draw Particles
             particles.forEach((p, i) => {
-                p.update(mouse.x, mouse.y);
-
-                // Connect lines between close geometric particles slightly
+                p.update();
+                // Connect lines
                 if (!p.isText) {
                     particles.slice(i + 1).forEach(p2 => {
                         if (!p2.isText) {
                             const dx = p.x - p2.x;
                             const dy = p.y - p2.y;
                             const dist = Math.sqrt(dx * dx + dy * dy);
-                            if (dist < 150) {
+                            // Connectivity threshold reduced slightly to keep clean look with higher density
+                            if (dist < 130) {
                                 ctx.beginPath();
-                                ctx.strokeStyle = `rgba(100, 255, 218, ${0.1 - dist / 1500})`; // Fades with distance
+                                ctx.strokeStyle = `rgba(100, 255, 218, ${0.15 - dist / 1000})`;
                                 ctx.moveTo(p.x, p.y);
                                 ctx.lineTo(p2.x, p2.y);
                                 ctx.stroke();
@@ -147,12 +149,11 @@ const Background = () => {
                 }
             });
 
-            requestAnimationFrame(animate);
+            animationFrameId = requestAnimationFrame(animate);
         };
-
         animate();
 
-        // Event Listeners
+        // Listeners
         const handleResize = () => {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -160,8 +161,10 @@ const Background = () => {
         };
 
         const handleMouseMove = (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            // Normalize to -1 to 1 range
+            const normX = (e.clientX / window.innerWidth) * 2 - 1;
+            const normY = (e.clientY / window.innerHeight) * 2 - 1;
+            target.current = { x: normX, y: normY };
         };
 
         window.addEventListener('resize', handleResize);
@@ -170,12 +173,24 @@ const Background = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('mousemove', handleMouseMove);
+            cancelAnimationFrame(animationFrameId);
         };
     }, []);
 
     return (
         <div className="background-container">
-            <canvas ref={canvasRef} className="background-canvas" />
+            <div className="parallax-wrapper" ref={wrapperRef}>
+                {/* Layer 1: Glow */}
+                <div className="parallax-layer layer-glow" ref={glowRef}></div>
+
+                {/* Layer 2: Grid */}
+                <div className="parallax-layer layer-grid" ref={gridRef}></div>
+
+                {/* Layer 3: Particles & Text */}
+                <div className="parallax-layer layer-particles">
+                    <canvas ref={canvasRef} className="background-canvas" />
+                </div>
+            </div>
         </div>
     );
 };

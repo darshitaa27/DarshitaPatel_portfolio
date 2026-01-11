@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './About.css';
+import ThreeDTilt from './ThreeDTilt';
 
 const About = () => {
     const ref = useRef(null);
@@ -9,8 +10,14 @@ const About = () => {
         offset: ["start end", "end start"]
     });
 
-    // Gentle parallax effect
-    const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+    // 3D Scroll Transforms
+    // As the user scrolls through the section:
+    // 0% (enter bottom) -> 50% (center) -> 100% (exit top)
+    // "More screen scroll effect" -> Increased angles and scale depth
+    const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [75, 0, 75]);
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.5, 1, 1, 0.5]);
+    const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
     return (
         <section id="about" ref={ref} className="about-section">
@@ -26,29 +33,41 @@ const About = () => {
 
             <motion.div
                 className="about-container"
-                style={{ y }} // Parallax applied here
+                style={{
+                    perspective: 1200, // Increased perspective for deeper 3D feel
+                    y
+                }}
             >
                 <motion.div
-                    className="about-card glass-card"
-                    initial={{ opacity: 0, y: 100, rotateX: 45, scale: 0.8 }}
-                    whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-                    viewport={{ once: false, margin: "-100px" }} // Changed to once: false so it replays if they scroll up/down? User might like that. Let's keep once: true for professionalism, but user asked for "when I scroll". I'll use once: true usually.
-                    transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
+                    style={{
+                        rotateX,
+                        scale,
+                        opacity,
+                        transformStyle: "preserve-3d"
+                    }}
                 >
-                    <div className="about-text">
-                        <p>
-                            Hello! My name is Darshita and I enjoy creating things that live on the internet and beyond.
-                            My interest in software development started young, and I've since cultivated a strong foundation in
-                            <span className="text-mint"> software engineering, problem-solving, and user-centered design</span>.
-                        </p>
-                        <p>
-                            I am a motivated <span className="text-white">Computer Science student</span> at Conestoga College.
-                            I have experienced in <span className="text-mint">C, C++, and C#</span>, with hands-on academic projects spanning systems, databases, UX, and full SDLC development.
-                        </p>
-                        <p>
-                            I am actively seeking a <span className="text-mint">Summer 2026 Software Developer Co-op</span> where I can contribute to meaningful projects and continue learning.
-                        </p>
-                    </div>
+                    <ThreeDTilt
+                        className="about-card glass-card"
+                        tiltEnable={false} // Disable mouse tilt
+                        glare={false} // Disable white glare
+                        spotlight={false} // Disable moving spotlight (fixing "blink")
+                        scaleOnHover={false} // Disable grow effect
+                    >
+                        <div className="about-text">
+                            <p>
+                                Hey, I’m Darshita Patel, and I enjoy creating things that live on the internet and beyond.
+                                My passion for coding began early, and I've since cultivated a strong foundation in
+                                <span className="text-mint"> software engineering, problem-solving, and user-centered design</span>.
+                            </p>
+                            <p>
+                                I am a motivated <span className="text-white">Computer Science student</span> at Conestoga College.
+                                I have experience in <span className="text-mint">C, C++, C#, HTML, and JavaScript</span>, with hands-on academic projects spanning systems, databases, UX, and full SDLC development.
+                            </p>
+                            <p>
+                                I am actively seeking a <span className="text-mint">Summer 2026 Software Developer Co-op</span> where I can contribute to meaningful projects and continue learning.
+                            </p>
+                        </div>
+                    </ThreeDTilt>
                 </motion.div>
             </motion.div>
         </section>

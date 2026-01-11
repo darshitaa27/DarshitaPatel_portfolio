@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, Terminal, Database, Wrench, BookOpen } from 'lucide-react';
 import './Skills.css';
+import ThreeDTilt from './ThreeDTilt';
 
 const Skills = () => {
     const skillsData = [
@@ -32,17 +33,7 @@ const Skills = () => {
         }
     ];
 
-    const highlights = ['C++', 'SQL', 'JavaScript', 'Figma', 'GitHub', 'Agile/Scrum', 'OOP', 'DSA', 'SDLC', 'DBMS', 'Networking'];
 
-    const isHighlighted = (skill) => {
-        // Simple check or partial match if needed. Using exact match or includes for keywords.
-        // For "Data Structures & Algorithms", user said "DSA" in highlights list. I should probably match exact item names from the user request or partials.
-        // User list has "DSA", but item is "Data Structures & Algorithms". I will map them or check generous naming.
-        // Actually, user's item list has "Data Structures & Algorithms". The highlight command says "DSA". 
-        // I will add specific checks.
-        if (skill === 'Data Structures & Algorithms') return true; // Map DSA
-        return highlights.includes(skill);
-    };
 
     return (
         <section id="skills" className="expertise-section">
@@ -68,7 +59,7 @@ const Skills = () => {
 
             <div className="skills-matrix">
                 {skillsData.map((group, index) => (
-                    <motion.div
+                    <ThreeDTilt
                         key={index}
                         className="matrix-row"
                         initial={{ opacity: 0, x: -20 }}
@@ -77,32 +68,24 @@ const Skills = () => {
                         transition={{ delay: index * 0.1 }}
                     >
                         <div className="matrix-left">
-                            <span className="matrix-icon">{group.icon}</span>
+                            <div className="icon-wrapper">
+                                <span className="matrix-icon">{group.icon}</span>
+                            </div>
                             <h3 className="matrix-category">{group.category}</h3>
                         </div>
                         <div className="matrix-right">
                             <div className="chips-container">
-                                {group.items.map((skill, i) => {
-                                    const active = isHighlighted(skill);
-                                    return (
-                                        <motion.span
-                                            key={i}
-                                            className={`expert-chip ${active ? 'highlighted-chip' : ''}`}
-                                            whileHover={{
-                                                y: -3,
-                                                boxShadow: active
-                                                    ? "0 4px 15px rgba(212, 175, 55, 0.4)"
-                                                    : "0 4px 12px rgba(212, 175, 55, 0.2)",
-                                                scale: 1.05
-                                            }}
-                                        >
-                                            {skill}
-                                        </motion.span>
-                                    );
-                                })}
+                                {group.items.map((skill, i) => (
+                                    <ThreeDTilt
+                                        key={i}
+                                        className="expert-chip inline-block"
+                                    >
+                                        {skill}
+                                    </ThreeDTilt>
+                                ))}
                             </div>
                         </div>
-                    </motion.div>
+                    </ThreeDTilt>
                 ))}
             </div>
         </section>

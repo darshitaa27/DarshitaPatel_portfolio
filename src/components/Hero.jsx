@@ -1,39 +1,21 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Github, Mail } from 'lucide-react';
 import heroImg from '../assets/hero_profile_v5.png';
 import './Hero.css';
+import ThreeDTilt from './ThreeDTilt';
 
 const Hero = () => {
     const sectionRef = useRef(null);
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    // Smooth spring animation for text parallax
-    const springConfig = { damping: 25, stiffness: 150 };
-    const textX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
-    const textY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
-
-    const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const { innerWidth, innerHeight } = window;
-        // Normalize mouse position from -0.5 to 0.5
-        const x = (clientX / innerWidth) - 0.5;
-        const y = (clientY / innerHeight) - 0.5;
-        mouseX.set(x);
-        mouseY.set(y);
-    };
 
     return (
         <section
             id="hero"
             className="hero-section"
             ref={sectionRef}
-            onMouseMove={handleMouseMove}
         >
             <motion.div
                 className="hero-content"
-                style={{ x: textX, y: textY }}
             >
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -70,7 +52,15 @@ const Hero = () => {
             </motion.div>
 
             <div className="hero-visual">
-                <img src={heroImg} alt="Darshita Patel" className="hero-image" />
+                <ThreeDTilt
+                    className="relative inline-block w-full h-full cursor-pointer"
+                    glare={false}
+                    shadowEnable={false} // Disable box shadow (square highlight)
+                    tiltEnable={false}
+                    scaleOnHover={false}
+                >
+                    <img src={heroImg} alt="Darshita Patel" className="hero-image" />
+                </ThreeDTilt>
             </div>
         </section>
     );

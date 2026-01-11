@@ -1,122 +1,129 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Folder, Github, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import './Projects.css';
+import ThreeDTilt from './ThreeDTilt';
+
+// Import images
+import imgParking from '../assets/project-parking.png';
+import imgDriver from '../assets/project-driver.png';
+import imgRacing from '../assets/project-racing.png';
+import imgTodo from '../assets/project-todo.png';
+import imgOrientation from '../assets/project-orientation.png';
+import imgShapes from '../assets/project-shapes.png';
 
 const Projects = () => {
     const projects = [
         {
             title: 'Smart Parking Lot System',
-            description: 'A comprehensive parking management solution.',
-            tech: ['C#', '.NET', 'Blazor', 'SQLite', 'Clean Architecture'],
-            highlights: [
-                'Implemented Clean Architecture for maintainability',
-                'Built reactive UI with Blazor',
-                'Optimized database queries with SQLite'
-            ],
-            github: 'https://github.com/FenishPatel0245/smart_parking'
+            description: 'Real-time monitoring and control dashboard for a smart parking facility with role-based access, device control, and smart alerts.',
+            tags: ['.NET 8', 'Blazor Server', 'SignalR', 'SQLite', 'Clean Architecture'],
+            image: imgParking,
+            link: 'https://github.com/FenishPatel0245/smart_parking_'
         },
         {
-            title: 'Phone Orientation Detector',
-            description: 'Machine learning based orientation detection.',
-            tech: ['C++', 'Machine Learning', 'KNN'],
-            highlights: [
-                'Implemented K-Nearest Neighbors algorithm in C++',
-                'Real-time orientation classification',
-                'Efficient data processing pipeline'
-            ],
-            github: 'https://github.com/FenishPatel0245/phone-orientation-detector-cpp'
+            title: 'Driver Analytics App',
+            description: 'Mobile app for tracking driving metrics with live trip insights, route tracking, and automated driver scoring analytics.',
+            tags: ['React Native', 'Firebase', 'Mobile UX', 'Analytics'],
+            image: imgDriver,
+            link: 'https://github.com/Shumroz2002/Group19F25'
         },
         {
-            title: 'ASCII Car Racing Game',
-            description: 'A retro-style console game.',
-            tech: ['C++', 'Windows Console', 'ASCII UI'],
-            highlights: [
-                'Custom game loop implementation',
-                'Responsive ASCII graphics',
-                'High performance console rendering'
-            ],
-            github: 'https://github.com/FenishPatel0245/Car_Game'
+            title: 'Car Racing Game',
+            description: 'Fullscreen Windows console-based ASCII racing game with collision, scoring, adaptive difficulty, and leaderboard.',
+            tags: ['C++', 'Windows API', 'OOP', 'Game Dev'],
+            image: imgRacing,
+            link: 'https://github.com/FenishPatel0245/Car_Game'
         },
         {
             title: 'To-Do List Manager',
-            description: 'Efficient CLI task management tool.',
-            tech: ['C/C++', 'CLI', 'Data Structures'],
-            highlights: [
-                'Advanced data structure usage',
-                'Persistent storage implementation',
-                'Interactive command line interface'
-            ],
-            github: 'https://github.com/FenishPatel0245/to-do-list-manager'
+            description: 'Menu-driven console app with task management features including priority sorting, recurring tasks, and persistent file storage.',
+            tags: ['C', 'Data Structures', 'File I/O'],
+            image: imgTodo,
+            link: 'https://github.com/FenishPatel0245/to-do-list-manager'
         },
         {
-            title: 'Software Engineering SDLC Group Project',
-            description: 'Collaborative software development project.',
-            tech: ['SDLC', 'Project Management', 'Team Collaboration'],
-            highlights: [
-                'Full SDLC lifecycle implementation',
-                'Agile methodology application',
-                'Comprehensive documentation'
-            ],
-            github: 'https://github.com/Shumroz2002/Group19F25'
+            title: 'Orientation Classifier',
+            description: 'C++ OOP application that uses gravity sensor vectors and Nearest Neighbour classification to detect phone orientation.',
+            tags: ['C++', 'OOP', 'Machine Learning', 'Math'],
+            image: imgOrientation,
+            link: 'https://github.com/FenishPatel0245/phone-orientation-detector-cpp'
         },
         {
-            title: 'CSCN71020 Group Project',
-            description: 'Academic group project focusing on software principles.',
-            tech: ['C++', 'Software Design', 'Group Work'],
-            highlights: [
-                'Applied software design patterns',
-                'Collaborative development workflow',
-                'Code review and quality assurance'
-            ],
-            github: 'https://github.com/Shumroz2002/CSCN71020_Group3'
+            title: 'Shape Finder Tool',
+            description: 'C-based console tool for identifying geometric shapes using input validation, conditional logic, and calculations.',
+            tags: ['C', 'Geometry', 'Logic', 'Validation'],
+            image: imgShapes,
+            link: 'https://github.com/Shumroz2002/CSCN71020_Group3'
         }
     ];
 
     return (
-        <section id="projects">
-            <motion.h2
-                className="section-title"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-            >
-                Projects
-            </motion.h2>
+        <section id="projects" className="projects-section">
+            <div className="projects-header">
+                <motion.h2
+                    className="section-title centered-title"
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    Projects
+                </motion.h2>
+                <motion.p
+                    className="section-subtitle"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                >
+                    Selected work showcasing my software development, UI, and system design projects.
+                </motion.p>
+            </div>
 
             <div className="projects-grid">
                 {projects.map((project, index) => (
                     <motion.div
                         key={index}
-                        className="glass-card project-card"
-                        initial={{ opacity: 0, y: 20 }}
+                        className="project-wrapper"
+                        initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
                     >
-                        <div className="project-header">
-                            <Folder size={40} className="folder-icon" />
-                            <div className="project-links">
-                                <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-link">
-                                    <Github size={20} />
-                                </a>
+                        <ThreeDTilt className="glass-card project-card">
+                            <div className="project-image-container">
+                                <img src={project.image} alt={project.title} className="project-image" />
                             </div>
-                        </div>
 
-                        <h3 className="project-title">{project.title}</h3>
-                        <p className="project-description">{project.description}</p>
+                            <div className="project-content">
+                                <h3 className="project-title">{project.title}</h3>
+                                <p className="project-description">{project.description}</p>
 
-                        <ul className="project-highlights">
-                            {project.highlights.map((highlight, i) => (
-                                <li key={i}>{highlight}</li>
-                            ))}
-                        </ul>
+                                <div className="project-tags">
+                                    {project.tags.map((tag, i) => (
+                                        <span key={i} className="project-tag">{tag}</span>
+                                    ))}
+                                </div>
 
-                        <ul className="project-tech-list">
-                            {project.tech.map((tech, i) => (
-                                <li key={i}>{tech}</li>
-                            ))}
-                        </ul>
+                                {project.link ? (
+                                    <a
+                                        href={project.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="project-link"
+                                    >
+                                        View Project <ArrowRight size={16} className="ml-1" />
+                                    </a>
+                                ) : (
+                                    <span
+                                        className="project-link"
+                                        style={{ opacity: 0.5, cursor: 'not-allowed' }}
+                                    >
+                                        View Project <ArrowRight size={16} className="ml-1" />
+                                    </span>
+                                )}
+                            </div>
+                        </ThreeDTilt>
                     </motion.div>
                 ))}
             </div>

@@ -18,6 +18,7 @@ const Navbar = () => {
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Design', href: '#design' },
     { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -29,7 +30,7 @@ const Navbar = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <a href="#" className="logo">DP</a>
+        <a href="#" className="logo hover-lift">DP</a>
       </motion.div>
 
       <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
@@ -41,7 +42,7 @@ const Navbar = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
           >
-            <a href={link.href} onClick={() => setIsOpen(false)}>
+            <a href={link.href} onClick={() => setIsOpen(false)} className="hover-lift">
               {link.name}
             </a>
           </motion.li>

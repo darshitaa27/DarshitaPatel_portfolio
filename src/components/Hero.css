@@ -62,10 +62,20 @@
     max-height: 550px;
     width: auto;
     object-fit: contain;
-    transform: translateY(30px);
+    margin-top: 30px;
+    /* Removed clip-path to ensure shadow touches the image */
+
     /* Move slightly downward */
+    /* Initial state: subtle shadow */
     filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.1));
-    /* Subtle glow to match theme */
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect for the golden shadow */
+.hero-visual:hover .hero-image {
+    /* Stronger golden shadow */
+    filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.8));
+    /* ThreeDTilt handles the 3D scale, but we ensure the image filter transitions nicely */
 }
 
 @media (max-width: 1024px) {

@@ -6,13 +6,71 @@
     height: 100vh;
     z-index: -1;
     overflow: hidden;
-    background: linear-gradient(to bottom, #0a192f 0%, #112240 100%);
+    background: linear-gradient(to bottom, #0a192f 0%, #020c1b 100%);
+    perspective: 1000px;
+    /* Important for 3D effect */
     pointer-events: none;
-    /* Allow clicking through */
+}
+
+.parallax-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    will-change: transform;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Layer 1: Radial Glows */
+.layer-glow {
+    background:
+        radial-gradient(circle at 20% 30%, rgba(29, 69, 117, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+    filter: blur(40px);
+    opacity: 0.4;
+}
+
+/* Layer 2: Grid */
+.layer-grid {
+    background-size: 50px 50px;
+    background-image:
+        linear-gradient(to right, rgba(136, 146, 176, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(136, 146, 176, 0.03) 1px, transparent 1px);
+    mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+    -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+}
+
+/* Layer 3: Particles (Canvas) */
+.layer-particles {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .background-canvas {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .parallax-wrapper,
+    .parallax-layer {
+        transform: none !important;
+        animation: none !important;
+    }
 }

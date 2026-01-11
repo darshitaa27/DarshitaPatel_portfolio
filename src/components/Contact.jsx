@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Phone } from 'lucide-react';
 import './Contact.css';
+import ThreeDTilt from './ThreeDTilt';
 
 const Contact = () => {
     return (
@@ -15,7 +16,7 @@ const Contact = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
             >
-                Contact
+                Let's contact
             </motion.h2>
 
             <motion.p
@@ -36,25 +37,33 @@ const Contact = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
             >
-                <a href="mailto:dpatel6206@conestogac.on.ca" className="contact-item">
-                    <Mail className="contact-icon" size={24} />
-                    <span>dpatel6206@conestogac.on.ca</span>
-                </a>
+                <ThreeDTilt className="contact-item-wrapper inline-block">
+                    <a href="mailto:dpatel6206@conestogac.on.ca" className="contact-item">
+                        <Mail className="contact-icon" size={24} />
+                        <span>dpatel6206@conestogac.on.ca</span>
+                    </a>
+                </ThreeDTilt>
 
-                <a href="https://github.com/darshitaa27" target="_blank" rel="noopener noreferrer" className="contact-item">
-                    <Github className="contact-icon" size={24} />
-                    <span>GitHub</span>
-                </a>
+                <ThreeDTilt className="contact-item-wrapper inline-block">
+                    <a href="https://github.com/darshitaa27" target="_blank" rel="noopener noreferrer" className="contact-item">
+                        <Github className="contact-icon" size={24} />
+                        <span>GitHub</span>
+                    </a>
+                </ThreeDTilt>
 
-                <a href="https://www.linkedin.com/in/darshita-patel-7b11b134a/" target="_blank" rel="noopener noreferrer" className="contact-item">
-                    <Linkedin className="contact-icon" size={24} />
-                    <span>LinkedIn</span>
-                </a>
+                <ThreeDTilt className="contact-item-wrapper inline-block">
+                    <a href="https://www.linkedin.com/in/darshita-patel-7b11b134a/" target="_blank" rel="noopener noreferrer" className="contact-item">
+                        <Linkedin className="contact-icon" size={24} />
+                        <span>LinkedIn</span>
+                    </a>
+                </ThreeDTilt>
 
-                <div className="contact-item">
-                    <Phone className="contact-icon" size={24} />
-                    <span>+1 (519) 991-2142</span>
-                </div>
+                <ThreeDTilt className="contact-item-wrapper inline-block">
+                    <div className="contact-item">
+                        <Phone className="contact-icon" size={24} />
+                        <span>+1 (519) 991-2142</span>
+                    </div>
+                </ThreeDTilt>
             </motion.div>
 
 
