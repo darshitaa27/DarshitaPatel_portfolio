@@ -1,0 +1,42 @@
+.experience-card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.role-name {
+    font-size: 1.2rem;
+    color: var(--slate);
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.experience-description {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.experience-item {
+    color: var(--slate);
+    font-size: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.5;
+}
+
+.experience-item::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--mint);
+    font-size: 1.1rem;
+}
