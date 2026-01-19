@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import './Contact.css';
 import ThreeDTilt from './ThreeDTilt';
 
@@ -58,12 +58,7 @@ const Contact = () => {
                     </a>
                 </ThreeDTilt>
 
-                <ThreeDTilt className="contact-item-wrapper inline-block">
-                    <div className="contact-item">
-                        <Phone className="contact-icon" size={24} />
-                        <span>+1 (519) 991-2142</span>
-                    </div>
-                </ThreeDTilt>
+
             </motion.div>
 
 
